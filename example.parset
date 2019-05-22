@@ -8,12 +8,14 @@ iter 100000
 % Diffusion in vertical direction
 diffcoeffz 2.8e28
 % input numpy array
-inputarray 
+inputarray
+% Radius of model galaxy in kpc
+radius
 % output numpy array
 outputarray outtest.npy
 % Input source distribution
 inputsource sourcefunction15kpc.txt
 % Input magnetic field distribution
 inputmagnetic bfield15kpc300.txt
-% output directory name  
+% output directory name
 outputdir makingplotsfortalk

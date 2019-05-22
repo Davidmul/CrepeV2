@@ -34,10 +34,10 @@ if __name__ == '__main__':
 
     (options, args) = parser.parse_args()
 
-    print "CREPE ver. " + VERSION
-    print "Written by David D. Mulcahy"
-    print ""
-    print "Parsing parameter file..."
+    print(f'CREPE ver.{VERSION}')
+    print('Written by David D. Mulcahy')
+    print('Any issues,bugs,etc email david.dec.mulcahy@gmail.com')
+    print('Parsing parameter file...')'
     params = readfromparset(args[0])
 
 
@@ -47,6 +47,10 @@ kappa = 1
 nt = params.iter
 outputarray = 'output.npy'
 
+
+log_filename = 'crepe_{}.log'.format(datetime.today().strftime('%Y_%m_%d_%H_%M')) # tried fstring, didn't work
+setup_logger('log_crepe', log_filename, level=logging.DEBUG)
+log_crepe = logging.getLogger('log_crepe')
 
 ####Creating plot directories####
 
@@ -58,6 +62,8 @@ else:
 
 
 #Parameters to be used
+
+# Setup the parameters
 
 ####SPATIAL #####
 startr = 0.05
@@ -112,18 +118,20 @@ gamma_0 = -2.001 #injection energy slope -2 is equal to -0.5 in spectral index
 N = K*(E**(gamma_0)) ###!!!!N.B linear E must go into this function!!!!#####
 
 ############Input RADIAL Magnetic Field####################
+
+# function defined for this
 bfeldy = np.loadtxt(params.inputmagnetic,unpack=True, usecols=[1])
 print bfeldy
-bfeld0 = np.max(bfeldy) #normalise the magnetic field
+bfeld0 = np.max(bfeldy) # normalise the magnetic field
 print 'Bfeld0 is',bfeld0
 bfeldprime = bfeldy/bfeld0 # making bfield dimensionless
 
-########Input radial SNR for injection##################
+# function defined for this
 sourcey = np.loadtxt(params.inputsource,unpack=True, usecols=[1])
-
 inputQ = sourcey*0.02
 Q0 = np.max(inputQ)/2
 inputQ = (inputQ/Q0)
+
 
 # checking if the second derivative at nr is 0, all points in this area should be zero
 if inputQ[nr]==0 and inputQ[nr-1]==0 and inputQ[nr-2]==0:
